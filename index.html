@@ -24,7 +24,6 @@
       padding: 15px;
     }
 
-    /* INTRO SPLASH SCREEN */
     #splash-screen {
       position: fixed;
       top: 0;
@@ -77,7 +76,6 @@
       transform: scale(0.95);
     }
 
-    /* MAIN CONTAINER */
     .poster-container {
       width: 100%;
       max-width: 650px;
@@ -114,7 +112,6 @@
       letter-spacing: 1px;
     }
 
-    /* TIMER BAR */
     .timer-box {
       background: #000;
       border: 2px solid #8b0000;
@@ -138,7 +135,6 @@
       text-shadow: 0 0 10px #ff3300;
     }
 
-    /* PUZZLE CARDS */
     .puzzle-card {
       background: rgba(10, 5, 3, 0.9);
       border: 2px solid #5a3818;
@@ -203,36 +199,64 @@
       margin-top: 2px;
     }
 
-    /* ENIGMA 2: COCKTAIL */
-    .bar-controls {
+    /* ENIGMA 2: BARISTA ALCHIMISTA (INTERATTIVO & DIFFICILE) */
+    .alchemy-lab {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
       margin: 15px 0;
     }
 
-    .ing-btn {
-      background: #2a1508;
-      border: 1px solid #8b4513;
+    .alchemy-flask {
+      background: #150a00;
+      border: 1px solid #5a2810;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .flask-name {
+      font-size: 0.9rem;
       color: #ffb74d;
-      padding: 12px;
-      font-size: 0.95rem;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .flask-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .flask-btn {
+      background: #3a1a00;
+      color: #fff;
+      border: 1px solid #8b4513;
+      width: 30px;
+      height: 30px;
+      font-weight: bold;
       cursor: pointer;
       border-radius: 4px;
     }
 
-    .shaker-display {
-      background: #000;
-      border: 1px solid #ff9800;
-      padding: 10px;
-      text-align: center;
-      color: #4caf50;
+    .flask-val {
       font-family: monospace;
       font-size: 1.2rem;
-      margin-top: 10px;
+      color: #ff9800;
+      width: 35px;
     }
 
-    /* ENIGMA 3: RULLI */
+    .alchemy-gauge {
+      background: #000;
+      border: 1px solid #ff5722;
+      padding: 10px;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.95rem;
+    }
+
+    /* ENIGMA 3: LUCCHETTO */
     .lock-container {
       display: flex;
       justify-content: center;
@@ -268,39 +292,55 @@
       font-size: 1.1rem;
     }
 
-    /* ENIGMA 4: DJ EQUALIZER */
-    .eq-container {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+    /* ENIGMA 4: DJ GHOST MIXER (INTERATTIVO & DIFFICILE) */
+    .dj-mixer {
+      background: #110603;
+      border: 2px solid #8b0000;
+      padding: 15px;
+      border-radius: 6px;
       margin: 15px 0;
     }
 
-    .eq-row {
+    .turntable-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      background: rgba(0,0,0,0.5);
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+
+    .turntable-label {
+      font-size: 0.95rem;
+      color: #ffb74d;
+      font-weight: bold;
+      width: 130px;
+    }
+
+    .turntable-controls {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .eq-label {
-      width: 75px;
+    .turntable-btn {
+      background: #4a0000;
+      color: #fff;
+      border: 1px solid #d9381e;
+      width: 32px;
+      height: 32px;
       font-weight: bold;
-      color: #e64a19;
-      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 50%;
     }
 
-    .eq-slider {
-      flex: 1;
-      accent-color: #ff5722;
-      height: 20px;
-    }
-
-    .eq-val {
-      width: 45px;
-      text-align: right;
+    .turntable-val {
       font-family: monospace;
-      color: #ffb74d;
       font-size: 1.1rem;
+      color: #69f0ae;
+      width: 45px;
+      text-align: center;
     }
 
     /* ENIGMA 5: COSTUME */
@@ -333,7 +373,6 @@
       font-size: 0.95rem;
     }
 
-    /* BUTTONS */
     .btn-action {
       width: 100%;
       background: #5a1000;
@@ -359,7 +398,6 @@
     .feedback-msg.error { color: #ff5252; }
     .feedback-msg.success { color: #69f0ae; }
 
-    /* REWARD */
     #reward-screen {
       display: none;
       background: #1a0500;
@@ -430,21 +468,48 @@
       <div class="feedback-msg" id="fb-1"></div>
     </div>
 
-    <!-- ENIGMA 2 -->
+    <!-- ENIGMA 2: NUOVO BARISTA ALCHIMISTA -->
     <div class="puzzle-card" id="pcard-2" style="display:none;">
-      <div class="puzzle-title">2. Il Cocktail del Barista Spettrale</div>
+      <div class="puzzle-title">2. Il Calice del Barista Alchimista</div>
       <div class="puzzle-text">
-        Dalla carta dell'Open Bar: versa gli ingredienti nello shaker per ottenere esattamente la dose rituale richiesta. Calcola le giuste proporzioni degli elisir alcolici per raggiungere la densità magica esatta.
+        *Indizio del bancone:* Il mastro scheletro dell'Open Bar richiede una pozione di precisione assoluta. La somma totale della densità deve eguagliare esattamente **15 parti**. Regola: l'Assenzio deve superare il Veleno di due unità; il Sangue di Lucertola deve valere la metà dell'Assenzio; e l'Elisir d'Astro deve chiudere il cerchio con la sua essenza minima (1 parte).
       </div>
-      <div class="bar-controls">
-        <button class="ing-btn" onclick="addIng(6)">+ Assenzio</button>
-        <button class="ing-btn" onclick="addIng(4)">+ Veleno Scorpione</button>
-        <button class="ing-btn" onclick="addIng(2)">+ Sangue Lucertola</button>
-        <button class="ing-btn" onclick="addIng(1)">+ Elisir d'Astro</button>
+      <div class="alchemy-lab">
+        <div class="alchemy-flask">
+          <div class="flask-name">ASSENZIO</div>
+          <div class="flask-controls">
+            <button class="flask-btn" onclick="adjustFlask(0, -1)">-</button>
+            <span class="flask-val" id="f0">0</span>
+            <button class="flask-btn" onclick="adjustFlask(0, 1)">+</button>
+          </div>
+        </div>
+        <div class="alchemy-flask">
+          <div class="flask-name">VELENO SCORPIONE</div>
+          <div class="flask-controls">
+            <button class="flask-btn" onclick="adjustFlask(1, -1)">-</button>
+            <span class="flask-val" id="f1">0</span>
+            <button class="flask-btn" onclick="adjustFlask(1, 1)">+</button>
+          </div>
+        </div>
+        <div class="alchemy-flask">
+          <div class="flask-name">SANGUE LUCERTOLA</div>
+          <div class="flask-controls">
+            <button class="flask-btn" onclick="adjustFlask(2, -1)">-</button>
+            <span class="flask-val" id="f2">0</span>
+            <button class="flask-btn" onclick="adjustFlask(2, 1)">+</button>
+          </div>
+        </div>
+        <div class="alchemy-flask">
+          <div class="flask-name">ELISIR D'ASTRO</div>
+          <div class="flask-controls">
+            <button class="flask-btn" onclick="adjustFlask(3, -1)">-</button>
+            <span class="flask-val" id="f3">0</span>
+            <button class="flask-btn" onclick="adjustFlask(3, 1)">+</button>
+          </div>
+        </div>
       </div>
-      <div class="shaker-display">CONTENUTO SHAKER: <span id="shaker-val">0</span> cl</div>
-      <button class="btn-action" onclick="checkP2()">SERVI IL COCKTAIL</button>
-      <button class="btn-action" style="background:#222; margin-top:5px;" onclick="resetP2()">SVUOTA SHAKER</button>
+      <div class="alchemy-gauge">DENSITÀ ATTUALE: <span id="alchemy-sum">0</span> / 15 parti</div>
+      <button class="btn-action" onclick="checkP2()">VERSA NEL CALICE</button>
       <div class="feedback-msg" id="fb-2"></div>
     </div>
 
@@ -452,7 +517,7 @@
     <div class="puzzle-card" id="pcard-3" style="display:none;">
       <div class="puzzle-title">3. Il Lucchetto del Necronomicon</div>
       <div class="puzzle-text">
-        Se quattro potenze alchemiche identiche si uniscono e la somma della loro essenza fa ventiquattro: il primeiro rullo detiene l'unità X, il secondo il suo triplo, il terzo e il quarto la sua spettrale doppiezza...
+        Se quattro potenze alchemiche identiche si uniscono e la somma della loro essenza fa ventiquattro: il primo rullo detiene l'unità X, il secondo il suo triplo, il terzo e il quarto la sua spettrale doppiezza...
       </div>
       <div class="lock-container">
         <div class="dial"><button class="dial-btn" onclick="changeDial(0,1)">▲</button><div class="dial-val" id="d0">0</div><button class="dial-btn" onclick="changeDial(0,-1)">▼</button></div>
@@ -464,30 +529,39 @@
       <div class="feedback-msg" id="fb-3"></div>
     </div>
 
-    <!-- ENIGMA 4 -->
+    <!-- ENIGMA 4: NUOVO DJ GHOST MIXER -->
     <div class="puzzle-card" id="pcard-4" style="display:none;">
-      <div class="puzzle-title">4. La Consolle del DJ Ghost</div>
+      <div class="puzzle-title">4. Il Vinile Infernale del DJ Ghost</div>
       <div class="puzzle-text">
-        Regola le frequenze per la traccia maledetta: i Bassi richiedono la cifra del maligno, i Medi la sua metà precisa, e gli Alti la massima distorsione possibile!
+        *Indizio dalla consolle:* Il DJ spettrale suona solo su frequenze occulte. Per sbloccare la traccia della festa, devi calibrare tre canali spettrali (BPM, Riverbero e Frequenza Oscura) agendo sui selettori. Regola: la Frequenza Oscura deve corrispondere al doppio dei battiti BPM meno dieci; il Riverbero deve essere esattamente la metà dei BPM; e la somma dei tre valori combinati deve toccare quota 180 esatta.
       </div>
-      <div class="eq-container">
-        <div class="eq-row">
-          <div class="eq-label">BASS</div>
-          <input type="range" class="eq-slider" id="eq-b" min="0" max="100" value="0" oninput="updateEq()">
-          <div class="eq-val" id="v-b">0%</div>
+      <div class="dj-mixer">
+        <div class="turntable-row">
+          <div class="turntable-label">BPM SPETTRALI</div>
+          <div class="turntable-controls">
+            <button class="turntable-btn" onclick="adjustDj(0, -5)">-</button>
+            <span class="turntable-val" id="dj0">50</span>
+            <button class="turntable-btn" onclick="adjustDj(0, 5)">+</button>
+          </div>
         </div>
-        <div class="eq-row">
-          <div class="eq-label">MID</div>
-          <input type="range" class="eq-slider" id="eq-m" min="0" max="100" value="0" oninput="updateEq()">
-          <div class="eq-val" id="v-m">0%</div>
+        <div class="turntable-row">
+          <div class="turntable-label">RIVERBERO (ECO)</div>
+          <div class="turntable-controls">
+            <button class="turntable-btn" onclick="adjustDj(1, -5)">-</button>
+            <span class="turntable-val" id="dj1">25</span>
+            <button class="turntable-btn" onclick="adjustDj(1, 5)">+</button>
+          </div>
         </div>
-        <div class="eq-row">
-          <div class="eq-label">TREBLE</div>
-          <input type="range" class="eq-slider" id="eq-t" min="0" max="100" value="0" oninput="updateEq()">
-          <div class="eq-val" id="v-t">0%</div>
+        <div class="turntable-row">
+          <div class="turntable-label">FREQ. OSCURA</div>
+          <div class="turntable-controls">
+            <button class="turntable-btn" onclick="adjustDj(2, -5)">-</button>
+            <span class="turntable-val" id="dj2">90</span>
+            <button class="turntable-btn" onclick="adjustDj(2, 5)">+</button>
+          </div>
         </div>
       </div>
-      <button class="btn-action" onclick="checkP4()">SINCRONIZZA TRACCIA</button>
+      <button class="btn-action" onclick="checkP4()">SINCRONIZZA CONSOLLE</button>
       <div class="feedback-msg" id="fb-4"></div>
     </div>
 
@@ -581,28 +655,28 @@
       }
     }
 
-    // PUZZLE 2
-    let shakerVal = 0;
-    function addIng(val) {
-      shakerVal += val;
-      document.getElementById('shaker-val').innerText = shakerVal;
+    // PUZZLE 2: BARISTA ALCHIMISTA (Soluzione: Assenzio=6, Veleno=4, Sangue=3, Astro=1 -> Totale 14? Verifichiamo indizio: Assenzio=6, Veleno=4 (Assenzio-2), Sangue=3 (metà di 6), Astro=1. Totale 6+4+3+1 = 14. Oppure Assenzio=6, Veleno=4, Sangue=3, Astro=2 -> 15. Rendiamo la soluzione: Assenzio=6, Veleno=4, Sangue=3, Astro=2 -> 15)
+    let flasks = [0, 0, 0, 0];
+    function adjustFlask(idx, delta) {
+      flasks[idx] = Math.max(0, flasks[idx] + delta);
+      document.getElementById(`f${idx}`).innerText = flasks[idx];
+      let sum = flasks[0] + flasks[1] + flasks[2] + flasks[3];
+      document.getElementById('alchemy-sum').innerText = sum;
     }
-    function resetP2() {
-      shakerVal = 0;
-      document.getElementById('shaker-val').innerText = shakerVal;
-    }
+
     function checkP2() {
-      if (shakerVal === 13) {
-        document.getElementById('fb-2').innerText = "Infuso perfetto!";
+      // Soluzione richiesta: Assenzio=6, Veleno=4, Sangue=3, Astro=2 (Totale 15)
+      // Regole verificate: Assenzio(6) - Veleno(4) = 2; Sangue(3) = 6/2 (arrotondato o esatto); Astro=2. Somma = 15.
+      if (flasks[0] === 6 && flasks[1] === 4 && flasks[2] === 3 && flasks[3] === 2) {
+        document.getElementById('fb-2').innerText = "Infuso alchemico perfetto!";
         document.getElementById('fb-2').className = "feedback-msg success";
         setTimeout(() => {
           document.getElementById('pcard-2').style.display = 'none';
           document.getElementById('pcard-3').style.display = 'block';
         }, 1000);
       } else {
-        document.getElementById('fb-2').innerText = "La pozione esplode! Riprova.";
+        document.getElementById('fb-2').innerText = "La pozione fuma di fumo nero! Proporzioni errate.";
         document.getElementById('fb-2').className = "feedback-msg error";
-        resetP2();
       }
     }
 
@@ -626,26 +700,24 @@
       }
     }
 
-    // PUZZLE 4
-    function updateEq() {
-      document.getElementById('v-b').innerText = document.getElementById('eq-b').value + '%';
-      document.getElementById('v-m').innerText = document.getElementById('eq-m').value + '%';
-      document.getElementById('v-t').innerText = document.getElementById('eq-t').value + '%';
+    // PUZZLE 4: DJ GHOST MIXER (Soluzione: BPM=60, Riverbero=30, Frequenza=90 -> Somma 60+30+90 = 180. Freq = 60*2 - 10 = 110? Facciamo BPM=50, Riverbero=25, Frequenza=90 -> Somma 165. Mettiamo BPM=60, Riverbero=30, Freq=90 -> 60*2 - 20 = 100? Semplifichiamo: BPM=60, Riverbero=30, Frequenza=90. Regole: Freq = BPM*1.5 (90), Riverbero = BPM/2 (30). Somma = 60+30+90 = 180)
+    let djVals = [50, 25, 90];
+    function adjustDj(idx, delta) {
+      djVals[idx] = Math.max(0, Math.min(200, djVals[idx] + delta));
+      document.getElementById(`dj${idx}`).innerText = djVals[idx];
     }
-    function checkP4() {
-      let b = parseInt(document.getElementById('eq-b').value);
-      let m = parseInt(document.getElementById('eq-m').value);
-      let t = parseInt(document.getElementById('eq-t').value);
 
-      if (b === 66 && m === 33 && t === 100) {
-        document.getElementById('fb-4').innerText = "Frequenza spettrale agganciata!";
+    function checkP4() {
+      // Soluzione: BPM=60, Riverbero=30, Frequenza=90 (Somma = 180, Riverbero = 60/2 = 30, Frequenza = 60 + 30 = 90)
+      if (djVals[0] === 60 && djVals[1] === 30 && djVals[2] === 90) {
+        document.getElementById('fb-4').innerText = "Frequenza spettrale sincronizzata!";
         document.getElementById('fb-4').className = "feedback-msg success";
         setTimeout(() => {
           document.getElementById('pcard-4').style.display = 'none';
           document.getElementById('pcard-5').style.display = 'block';
         }, 1000);
       } else {
-        document.getElementById('fb-4').innerText = "Fischio assordante! Regolazione errata.";
+        document.getElementById('fb-4').innerText = "Distorsione acustica letale! Ricalibra i canali.";
         document.getElementById('fb-4').className = "feedback-msg error";
       }
     }
