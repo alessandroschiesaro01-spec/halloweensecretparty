@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Notte delle Anime Perdute - Halloween Private Party</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: #0d0805;
+      background-image: radial-gradient(circle, #2a0808 0%, #0d0805 100%);
+      color: #e0d0b0;
+      font-family: 'Times New Roman', Times, serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+    }
+
+    /* INTRO SPLASH SCREEN */
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000000;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      transition: opacity 1s ease;
+    }
+
+    .splash-title {
+      font-family: 'Impact', Charcoal, sans-serif;
+      color: #d9381e;
+      font-size: 2.8rem;
+      letter-spacing: 2px;
+      text-shadow: 0 0 15px rgba(217, 56, 30, 0.8);
+      margin-bottom: 25px;
+    }
+
+    .splash-desc {
+      font-size: 1.2rem;
+      color: #c0b090;
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: 35px;
+    }
+
+    .btn-spooky {
+      background: linear-gradient(180deg, #8b0000 0%, #4a0000 100%);
+      color: #f0e0c0;
+      border: 2px solid #d9381e;
+      padding: 16px 36px;
+      font-family: 'Impact', Charcoal, sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 6px;
+      box-shadow: 0 0 15px rgba(217, 56, 30, 0.8);
+      transition: transform 0.2s;
+    }
+
+    .btn-spooky:active {
+      transform: scale(0.95);
+    }
+
+    /* MAIN CONTAINER */
+    .poster-container {
+      width: 100%;
+      max-width: 650px;
+      background: #1a110b;
+      border: 4px solid #4a2810;
+      box-shadow: 0 0 30px #000, inset 0 0 50px rgba(0,0,0,0.8);
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 10px;
+      position: relative;
+    }
+
+    .header-banner {
+      text-align: center;
+      border-bottom: 2px solid #5a3010;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+
+    .main-title {
+      font-family: 'Impact', Charcoal, sans-serif;
+      font-size: 2.5rem;
+      color: #e64a19;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 0px #000, 0 0 10px #8b0000;
+    }
+
+    .sub-title {
+      font-family: 'Georgia', serif;
+      color: #d99b26;
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-top: 5px;
+      letter-spacing: 1px;
+    }
+
+    /* TIMER BAR */
+    .timer-box {
+      background: #000;
+      border: 2px solid #8b0000;
+      padding: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+
+    .timer-label {
+      color: #888;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    .timer-display {
+      font-family: 'Impact', Charcoal, sans-serif;
+      font-size: 2.2rem;
+      color: #ff3300;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #ff3300;
+    }
+
+    /* PUZZLE CARDS */
+    .puzzle-card {
+      background: rgba(10, 5, 3, 0.9);
+      border: 2px solid #5a3818;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+    }
+
+    .puzzle-title {
+      font-family: 'Georgia', serif;
+      font-weight: bold;
+      color: #ff9800;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #3a2008;
+      padding-bottom: 5px;
+    }
+
+    .puzzle-text {
+      font-size: 1.05rem;
+      color: #d0c0a0;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    /* ENIGMA 1: CANDELE */
+    .candle-grid {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
+
+    .candle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .flame {
+      width: 14px;
+      height: 22px;
+      background: #ff9800;
+      border-radius: 50% 50% 20% 20%;
+      box-shadow: 0 0 12px #ff5722;
+      opacity: 0.2;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .flame.lit {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    .wax {
+      width: 24px;
+      height: 60px;
+      background: #d0c0a0;
+      border-radius: 3px;
+      border: 1px solid #555;
+      margin-top: 2px;
+    }
+
+    /* ENIGMA 2: COCKTAIL */
+    .bar-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .ing-btn {
+      background: #2a1508;
+      border: 1px solid #8b4513;
+      color: #ffb74d;
+      padding: 12px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .shaker-display {
+      background: #000;
+      border: 1px solid #ff9800;
+      padding: 10px;
+      text-align: center;
+      color: #4caf50;
+      font-family: monospace;
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    /* ENIGMA 3: RULLI */
+    .lock-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .dial {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #110800;
+      border: 2px solid #8b4513;
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    .dial-val {
+      font-family: 'Impact', sans-serif;
+      font-size: 2rem;
+      color: #ff9800;
+      margin: 8px 0;
+    }
+
+    .dial-btn {
+      background: #3a1a00;
+      color: #fff;
+      border: none;
+      width: 36px;
+      height: 32px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    /* ENIGMA 4: DJ EQUALIZER */
+    .eq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin: 15px 0;
+    }
+
+    .eq-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .eq-label {
+      width: 75px;
+      font-weight: bold;
+      color: #e64a19;
+      letter-spacing: 1px;
+    }
+
+    .eq-slider {
+      flex: 1;
+      accent-color: #ff5722;
+      height: 20px;
+    }
+
+    .eq-val {
+      width: 45px;
+      text-align: right;
+      font-family: monospace;
+      color: #ffb74d;
+      font-size: 1.1rem;
+    }
+
+    /* ENIGMA 5: COSTUME */
+    .costume-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 15px 0;
+    }
+
+    .costume-slot {
+      background: #150a00;
+      border: 1px dashed #8b4513;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .slot-title {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 5px;
+      letter-spacing: 1px;
+    }
+
+    .slot-value {
+      font-weight: bold;
+      color: #ffb74d;
+      font-size: 0.95rem;
+    }
+
+    /* BUTTONS */
+    .btn-action {
+      width: 100%;
+      background: #5a1000;
+      color: #ffe0b2;
+      border: 1px solid #ff5722;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 1.05rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+
+    .feedback-msg {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      text-align: center;
+      min-height: 24px;
+      font-weight: bold;
+    }
+
+    .feedback-msg.error { color: #ff5252; }
+    .feedback-msg.success { color: #69f0ae; }
+
+    /* REWARD */
+    #reward-screen {
+      display: none;
+      background: #1a0500;
+      border: 3px double #ff5722;
+      padding: 25px;
+      text-align: center;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .location-title {
+      font-family: 'Impact', sans-serif;
+      color: #69f0ae;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .coords-box {
+      font-family: 'Impact', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      color: #ffeb3b;
+      background: #000;
+      padding: 15px;
+      border: 1px dashed #ffeb3b;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCHERMATA INIZIALE NERA -->
+  <div id="splash-screen">
+    <div class="splash-title">LA NOTTE DELLE ANIME PERDUTE</div>
+    <div class="splash-desc">
+      Benvenuto nell'oscurità. Per svelare le coordinate del luogo segreto dove si terrà la festa questa sera, dovrete dimostrare il vostro valore risolvendo i 5 sigilli entro 10 minuti...
+    </div>
+    <button class="btn-spooky" id="start-btn">INIZIA IL RITUALE</button>
+  </div>
+
+  <!-- CONTENITORE PRINCIPALE -->
+  <div class="poster-container">
+    <div class="header-banner">
+      <div class="main-title">ANIME PERDUTE</div>
+      <div class="sub-title">HALLOWEEN PRIVATE PARTY</div>
+    </div>
+
+    <!-- TIMER -->
+    <div class="timer-box">
+      <div class="timer-label">TEMPO RIMASTO PRIMA DEL VOSTRO ULTIMO RESPIRO</div>
+      <div class="timer-display" id="timer">10:00</div>
+    </div>
+
+    <!-- ENIGMA 1 -->
+    <div class="puzzle-card" id="pcard-1">
+      <div class="puzzle-title">1. Le Candele del Sabbat</div>
+      <div class="puzzle-text">
+        Accendi prima l'ultima candela a destra, poi quella che la precede immediatamente. Passa all'ombra di sinistra che segue la prima, risveglia la fiamma centrale e infine accendi il principio di ogni cosa.
+      </div>
+      <div class="candle-grid">
+        <div class="candle" onclick="toggleCandle(0)"><div class="flame" id="flame-0"></div><div class="wax"></div></div>
+        <div class="candle" onclick="toggleCandle(1)"><div class="flame" id="flame-1"></div><div class="wax"></div></div>
+        <div class="candle" onclick="toggleCandle(2)"><div class="flame" id="flame-2"></div><div class="wax"></div></div>
+        <div class="candle" onclick="toggleCandle(3)"><div class="flame" id="flame-3"></div><div class="wax"></div></div>
+        <div class="candle" onclick="toggleCandle(4)"><div class="flame" id="flame-4"></div><div class="wax"></div></div>
+      </div>
+      <div class="feedback-msg" id="fb-1"></div>
+    </div>
+
+    <!-- ENIGMA 2 -->
+    <div class="puzzle-card" id="pcard-2" style="display:none;">
+      <div class="puzzle-title">2. Il Cocktail del Barista Spettrale</div>
+      <div class="puzzle-text">
+        Dalla carta dell'Open Bar: versa gli ingredienti nello shaker per ottenere esattamente la dose rituale richiesta. Calcola le giuste proporzioni degli elisir alcolici per raggiungere la densità magica esatta.
+      </div>
+      <div class="bar-controls">
+        <button class="ing-btn" onclick="addIng(6)">+ Assenzio</button>
+        <button class="ing-btn" onclick="addIng(4)">+ Veleno Scorpione</button>
+        <button class="ing-btn" onclick="addIng(2)">+ Sangue Lucertola</button>
+        <button class="ing-btn" onclick="addIng(1)">+ Elisir d'Astro</button>
+      </div>
+      <div class="shaker-display">CONTENUTO SHAKER: <span id="shaker-val">0</span> cl</div>
+      <button class="btn-action" onclick="checkP2()">SERVI IL COCKTAIL</button>
+      <button class="btn-action" style="background:#222; margin-top:5px;" onclick="resetP2()">SVUOTA SHAKER</button>
+      <div class="feedback-msg" id="fb-2"></div>
+    </div>
+
+    <!-- ENIGMA 3 -->
+    <div class="puzzle-card" id="pcard-3" style="display:none;">
