@@ -39,7 +39,7 @@
       align-items: center;
       text-align: center;
       padding: 20px;
-      transition: opacity 1s ease;
+      transition: opacity 0.8s ease;
     }
 
     .splash-title {
@@ -398,7 +398,7 @@
     <div class="splash-desc">
       Benvenuto nell'oscurità. Per svelare le coordinate del luogo segreto dove si terrà la festa questa sera, dovrete dimostrare il vostro valore risolvendo i 5 sigilli entro 10 minuti...
     </div>
-    <button class="btn-spooky" id="start-btn">INIZIA IL RITUALE</button>
+    <button class="btn-spooky" onclick="startRitual()">INIZIA IL RITUALE</button>
   </div>
 
   <!-- CONTENITORE PRINCIPALE -->
@@ -450,3 +450,230 @@
 
     <!-- ENIGMA 3 -->
     <div class="puzzle-card" id="pcard-3" style="display:none;">
+      <div class="puzzle-title">3. Il Lucchetto del Necronomicon</div>
+      <div class="puzzle-text">
+        Se quattro potenze alchemiche identiche si uniscono e la somma della loro essenza fa ventiquattro: il primeiro rullo detiene l'unità X, il secondo il suo triplo, il terzo e il quarto la sua spettrale doppiezza...
+      </div>
+      <div class="lock-container">
+        <div class="dial"><button class="dial-btn" onclick="changeDial(0,1)">▲</button><div class="dial-val" id="d0">0</div><button class="dial-btn" onclick="changeDial(0,-1)">▼</button></div>
+        <div class="dial"><button class="dial-btn" onclick="changeDial(1,1)">▲</button><div class="dial-val" id="d1">0</div><button class="dial-btn" onclick="changeDial(1,-1)">▼</button></div>
+        <div class="dial"><button class="dial-btn" onclick="changeDial(2,1)">▲</button><div class="dial-val" id="d2">0</div><button class="dial-btn" onclick="changeDial(2,-1)">▼</button></div>
+        <div class="dial"><button class="dial-btn" onclick="changeDial(3,1)">▲</button><div class="dial-val" id="d3">0</div><button class="dial-btn" onclick="changeDial(3,-1)">▼</button></div>
+      </div>
+      <button class="btn-action" onclick="checkP3()">APRI IL LUCCHETTO</button>
+      <div class="feedback-msg" id="fb-3"></div>
+    </div>
+
+    <!-- ENIGMA 4 -->
+    <div class="puzzle-card" id="pcard-4" style="display:none;">
+      <div class="puzzle-title">4. La Consolle del DJ Ghost</div>
+      <div class="puzzle-text">
+        Regola le frequenze per la traccia maledetta: i Bassi richiedono la cifra del maligno, i Medi la sua metà precisa, e gli Alti la massima distorsione possibile!
+      </div>
+      <div class="eq-container">
+        <div class="eq-row">
+          <div class="eq-label">BASS</div>
+          <input type="range" class="eq-slider" id="eq-b" min="0" max="100" value="0" oninput="updateEq()">
+          <div class="eq-val" id="v-b">0%</div>
+        </div>
+        <div class="eq-row">
+          <div class="eq-label">MID</div>
+          <input type="range" class="eq-slider" id="eq-m" min="0" max="100" value="0" oninput="updateEq()">
+          <div class="eq-val" id="v-m">0%</div>
+        </div>
+        <div class="eq-row">
+          <div class="eq-label">TREBLE</div>
+          <input type="range" class="eq-slider" id="eq-t" min="0" max="100" value="0" oninput="updateEq()">
+          <div class="eq-val" id="v-t">0%</div>
+        </div>
+      </div>
+      <button class="btn-action" onclick="checkP4()">SINCRONIZZA TRACCIA</button>
+      <div class="feedback-msg" id="fb-4"></div>
+    </div>
+
+    <!-- ENIGMA 5 -->
+    <div class="puzzle-card" id="pcard-5" style="display:none;">
+      <div class="puzzle-title">5. Il Premio Costume del Re dell'Incubo</div>
+      <div class="puzzle-text">
+        Seleziona la vestizione del vincitore: il volto celato dal terrore del venerdì tredici, le corna del demone, il mantello intriso di sangue e la lama spaccacarne arrugginita.
+      </div>
+      <div class="costume-grid">
+        <div class="costume-slot" onclick="cycleCostume(0)">
+          <div class="slot-title">VOLTO</div>
+          <div class="slot-value" id="c0">Nessuno</div>
+        </div>
+        <div class="costume-slot" onclick="cycleCostume(1)">
+          <div class="slot-title">TESTA</div>
+          <div class="slot-value" id="c1">Nessuno</div>
+        </div>
+        <div class="costume-slot" onclick="cycleCostume(2)">
+          <div class="slot-title">ABITO</div>
+          <div class="slot-value" id="c2">Nessuno</div>
+        </div>
+        <div class="costume-slot" onclick="cycleCostume(3)">
+          <div class="slot-title">ARMA</div>
+          <div class="slot-value" id="c3">Nessuno</div>
+        </div>
+      </div>
+      <button class="btn-action" onclick="checkP5()">INCORONA IL RE</button>
+      <div class="feedback-msg" id="fb-5"></div>
+    </div>
+
+    <!-- REWARD FINALE -->
+    <div id="reward-screen">
+      <div class="location-title">L'INCUBO HA INIZIO!</div>
+      <p style="color:#d0c0a0;">Avete superato tutti i sigilli. Ecco la posizione segreta della festa:</p>
+      <div class="coords-box">LAT: 41.4582° N<br>LONG: 12.6574° E</div>
+      <p style="color:#ff9800; font-size:0.9rem;">Ore 22:00 - Presentati con la tua maschera...</p>
+    </div>
+
+  </div>
+
+  <script>
+    let timeLeft = 600;
+    let timerInterval;
+
+    function startRitual() {
+      const splash = document.getElementById('splash-screen');
+      splash.style.opacity = '0';
+      splash.style.pointerEvents = 'none';
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 800);
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        let m = Math.floor(timeLeft / 60);
+        let s = timeLeft % 60;
+        document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          alert("Il tempo è scaduto! Le anime vi hanno inghiottito...");
+          location.reload();
+        }
+      }, 1000);
+    }
+
+    // PUZZLE 1
+    let candleSeq = [];
+    const targetCandleSeq = [4, 3, 1, 2, 0];
+
+    function toggleCandle(idx) {
+      candleSeq.push(idx);
+      document.getElementById(`flame-${idx}`).classList.add('lit');
+
+      let currentStep = candleSeq.length - 1;
+      if (candleSeq[currentStep] !== targetCandleSeq[currentStep]) {
+        document.getElementById('fb-1').innerText = "Una folata gelida spegne le candele...";
+        document.getElementById('fb-1').className = "feedback-msg error";
+        setTimeout(() => {
+          for(let i=0; i<5; i++) document.getElementById(`flame-${i}`).classList.remove('lit');
+          candleSeq = [];
+          document.getElementById('fb-1').innerText = "";
+        }, 800);
+      } else if (candleSeq.length === 5) {
+        document.getElementById('fb-1').innerText = "Il primo sigillo è infranto!";
+        document.getElementById('fb-1').className = "feedback-msg success";
+        setTimeout(() => {
+          document.getElementById('pcard-1').style.display = 'none';
+          document.getElementById('pcard-2').style.display = 'block';
+        }, 1000);
+      }
+    }
+
+    // PUZZLE 2
+    let shakerVal = 0;
+    function addIng(val) {
+      shakerVal += val;
+      document.getElementById('shaker-val').innerText = shakerVal;
+    }
+    function resetP2() {
+      shakerVal = 0;
+      document.getElementById('shaker-val').innerText = shakerVal;
+    }
+    function checkP2() {
+      if (shakerVal === 13) {
+        document.getElementById('fb-2').innerText = "Infuso perfetto!";
+        document.getElementById('fb-2').className = "feedback-msg success";
+        setTimeout(() => {
+          document.getElementById('pcard-2').style.display = 'none';
+          document.getElementById('pcard-3').style.display = 'block';
+        }, 1000);
+      } else {
+        document.getElementById('fb-2').innerText = "La pozione esplode! Riprova.";
+        document.getElementById('fb-2').className = "feedback-msg error";
+        resetP2();
+      }
+    }
+
+    // PUZZLE 3
+    let dials = [0, 0, 0, 0];
+    function changeDial(idx, dir) {
+      dials[idx] = (dials[idx] + dir + 10) % 10;
+      document.getElementById(`d${idx}`).innerText = dials[idx];
+    }
+    function checkP3() {
+      if (dials.join('') === '3966') {
+        document.getElementById('fb-3').innerText = "Il Necronomicon si spalanca!";
+        document.getElementById('fb-3').className = "feedback-msg success";
+        setTimeout(() => {
+          document.getElementById('pcard-3').style.display = 'none';
+          document.getElementById('pcard-4').style.display = 'block';
+        }, 1000);
+      } else {
+        document.getElementById('fb-3').innerText = "Combinazione errata!";
+        document.getElementById('fb-3').className = "feedback-msg error";
+      }
+    }
+
+    // PUZZLE 4
+    function updateEq() {
+      document.getElementById('v-b').innerText = document.getElementById('eq-b').value + '%';
+      document.getElementById('v-m').innerText = document.getElementById('eq-m').value + '%';
+      document.getElementById('v-t').innerText = document.getElementById('eq-t').value + '%';
+    }
+    function checkP4() {
+      let b = parseInt(document.getElementById('eq-b').value);
+      let m = parseInt(document.getElementById('eq-m').value);
+      let t = parseInt(document.getElementById('eq-t').value);
+
+      if (b === 66 && m === 33 && t === 100) {
+        document.getElementById('fb-4').innerText = "Frequenza spettrale agganciata!";
+        document.getElementById('fb-4').className = "feedback-msg success";
+        setTimeout(() => {
+          document.getElementById('pcard-4').style.display = 'none';
+          document.getElementById('pcard-5').style.display = 'block';
+        }, 1000);
+      } else {
+        document.getElementById('fb-4').innerText = "Fischio assordante! Regolazione errata.";
+        document.getElementById('fb-4').className = "feedback-msg error";
+      }
+    }
+
+    // PUZZLE 5
+    const costumeOptions = [
+      ["Nessuno", "Maschera Hockey", "Zucca Maledetta"],
+      ["Nessuno", "Corna Diaboliche", "Cappello Strega"],
+      ["Nessuno", "Mantello Sangue", "Soffice Tuta"],
+      ["Nessuno", "Ascia Arrugginita", "Bacchetta Magica"]
+    ];
+    let costumeSelection = [0, 0, 0, 0];
+
+    function cycleCostume(idx) {
+      costumeSelection[idx] = (costumeSelection[idx] + 1) % costumeOptions[idx].length;
+      document.getElementById(`c${idx}`).innerText = costumeOptions[idx][costumeSelection[idx]];
+    }
+
+    function checkP5() {
+      if (costumeSelection.join('') === '1111') {
+        clearInterval(timerInterval);
+        document.getElementById('pcard-5').style.display = 'none';
+        document.getElementById('reward-screen').style.display = 'block';
+      } else {
+        document.getElementById('fb-5').innerText = "Il costume non spaventa abbastanza!";
+        document.getElementById('fb-5').className = "feedback-msg error";
+      }
+    }
+  </script>
+</body>
+</html>
